@@ -513,6 +513,7 @@
         // ========== FLOATING HEARTS ANIMATION ==========
         function createFloatingHeart() {
             const heart = document.createElement("div");
+            heart.classname = "heart"
             const hearts = ["💕", "💖", "💗", "💝", "💓"];
             heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
             heart.textContent = "💕";
