@@ -517,7 +517,8 @@
         // ========== FLOATING HEARTS ANIMATION ==========
         function createFloatingHeart() {
             const heart = document.createElement("div");
-            heart.className = "heart";
+            const hearts = ["💕", "💖", "💗", "💝", "💓"];
+            heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
             heart.textContent = "💕";
             heart.style.left = Math.random() * 100 + "%";
             heart.style.animationDuration = (3 + Math.random() * 2) + "s";
@@ -528,7 +529,7 @@
             }, 5000);
         }
 
-        setInterval(createFloatingHeart, 500);
+        setInterval(createFloatingHeart, 200);
 
         // ========== COUNTDOWN TIMER ==========
         const targetDate = new Date("May 10, 2026 00:00:00 UTC").getTime();
