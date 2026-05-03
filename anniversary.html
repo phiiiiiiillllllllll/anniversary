@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Anniversary</title>
+
+    <style>
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes floatingHearts {
+            0% {
+                opacity: 0;
+                transform: translateY(0) translateX(0) scale(0);
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) translateX(30px) scale(1);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* STYLING FOR THE WHOLE PAGE */
+        body {
+              margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffc0e0, #ffb3d9);
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* FLOATING HEARTS BACKGROUND */
+        .heart {
+            position: fixed;
+            pointer-events: none;
+            font-size: 24px;
+            left: 10%;
+            animation: floatingHearts 4s ease-in forwards;
+        }
+
+        /* STYLING FOR THE COUNTDOWN SECTION */
+        #countdown-section {
+            background: white;
+            border-radius: 20px;
+            padding: 60px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            max-height: 500px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 1s ease-in, slideInUp 1s ease-out;
+            margin-bottom: 100px;
+            margin-top: 200px;
+ 
+
+        }
+
+        #countdown-section h1 {
+            font-size: 36px;
+            color: #ff99cc;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        .password-section {
+            margin-top: 1000px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            text-align: center;
+        }
+
+        /* THE COUNTDOWN TIMER NUMBERS */
+        #countdown-timer {
+            font-size: 28px;
+            color: #333;
+            display: flex;
+            justify-content: space-around;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        #countdown-timer span {
+            background: #ffe6f0;
+            padding: 20px;
+            border-radius: 10px;
+            min-width: 100px;
+            font-weight: bold;
+            color: #ff99cc;
+            animation: bounce 2s ease-in-out infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .countdown-label {
+            font-size: 12px;
+            color: #ff99cc;
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .countdown-number {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        /* STYLING FOR THE TIMELINE SECTION */
+        #timeline-section {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 1000px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        #timeline-section h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #ff99cc;
+            margin-bottom: 50px;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        /* FEATURED PHOTO SECTION */
+        .featured-section {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: scaleIn 0.8s ease-out;
+        }
+
+        .featured-label {
+            font-size: 14px;
+            color: #ff99cc;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .featured-photo {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(255, 153, 204, 0.3);
+            display: block;
+            margin: 0 auto;
+        }
+
+        .featured-message {
+            font-size: 18px;
+            color: #333;
+            margin-top: 20px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* MONTHS GRID */
+        .months-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .month-folder {
+            background: #ffe6f0;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid #ffb3d9;
+            transition: all 0.3s ease;
+            animation: slideInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .month-folder:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 153, 204, 0.3);
+            border-color: #ff99cc;
+        }
+
+        .month-folder-label {
+            font-size: 14px;
+            color: #ff99cc;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .month-folder-count {
+            font-size: 12px;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        .folder-icon {
+            font-size: 32px;
+            margin: 10px 0;
+        }
+
+        /* Stagger animation for month folders */
+        .month-folder:nth-child(1) { animation-delay: 0.2s; }
+        .month-folder:nth-child(2) { animation-delay: 0.3s; }
+        .month-folder:nth-child(3) { animation-delay: 0.4s; }
+        .month-folder:nth-child(4) { animation-delay: 0.5s; }
+        .month-folder:nth-child(5) { animation-delay: 0.6s; }
+        .month-folder:nth-child(6) { animation-delay: 0.7s; }
+        .month-folder:nth-child(7) { animation-delay: 0.8s; }
+        .month-folder:nth-child(8) { animation-delay: 0.9s; }
+        .month-folder:nth-child(9) { animation-delay: 1s; }
+        .month-folder:nth-child(10) { animation-delay: 1.1s; }
+        .month-folder:nth-child(11) { animation-delay: 1.2s; }
+        .month-folder:nth-child(12) { animation-delay: 1.3s; }
+
+        /* MODAL STYLES */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: scaleIn 0.3s ease;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #ff99cc;
+            background: none;
+            border: none;
+        }
+
+        .close-modal:hover {
+            color: #ff1493;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            color: #ff99cc;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .photo-gallery {
+            margin-bottom: 20px;
+        }
+
+        .gallery-item {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .gallery-item p {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* MOBILE FRIENDLY */
+        @media (max-width: 600px) {
+            #countdown-section, #timeline-section {
+                padding: 30px;
+                max-width: 100%;
+            }
+
+            #countdown-timer {
+                font-size: 20px;
+                gap: 15px;
+            }
+
+            #countdown-timer span {
+                min-width: 60px;
+                padding: 15px;
+            }
+
+            .months-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 15px;
+            }
+
+            .featured-photo {
+                max-width: 100%;
+            }
+
+            .modal-content {
+                padding: 20px;
+                max-height: 90vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- COUNTDOWN SECTION -->
+    <div id="countdown-section">
+        <h1>Our Anniversary is Coming! 💕</h1>
+        <div id="countdown-timer">
+            <span id="days">
+                <div class="countdown-label">Days</div>
+                <div class="countdown-number">0</div>
+            </span>
+            <span id="hours">
+                <div class="countdown-label">Hours</div>
+                <div class="countdown-number">0</div>
+            </span>
+            <span id="minutes">
+                <div class="countdown-label">Minutes</div>
+                <div class="countdown-number">0</div>
+            </span>
+            <span id="seconds">
+                <div class="countdown-label">Seconds</div>
+                <div class="countdown-number">0</div>
+            </span>
+        </div>
+
+    </div>
+    
+
+        <!-- PASSWORD BYPASS (Secret way to unlock early) -->
+        <div class="password-section">
+            <p style="color: #999; font-size: 12px;">🔐 Secret bypass (for testing)</p>
+            <input type="password" id="passwordInput" placeholder="Enter password"
+                   style="padding: 10px; border: 2px solid #ffb3d9; border-radius: 5px; width: 150px;">
+            <button id="unlockButton"
+                    style="padding: 10px 20px; background: #ff99cc; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">
+                Unlock
+            </button>
+        </div>
+
+    <!-- TIMELINE SECTION (Hidden until countdown ends) -->
+    <div id="timeline-section" style="display: none;">
+        <h1>Our Story Together 💑</h1>
+
+        <!-- FEATURED PHOTO (Most Recent - May 10, 2025) -->
+        <div class="featured-section">
+            <div class="featured-label">✨ Our Anniversary - May 10, 2025 ✨</div>
+            <img src="https://via.placeholder.com/500x400?text=Our+Anniversary+Photo" alt="Anniversary Photo" class="featured-photo">
+            <p class="featured-message">💕 The day our love story became even more beautiful...</p>
+        </div>
+
+        <!-- MONTHS FOLDERS -->
+        <div class="months-grid">
+            <div class="month-folder" data-month="May">
+                <div class="folder-icon">📁</div>
+                <div class="month-folder-label">May 2025</div>
+                <div class="month-folder-count">2 photos</div>
+            </div>
+            <div class="month-folder" data-month="June">
+                <div class="folder-icon">📁</div>
+                <div class="month-folder-label">June 2025</div>
+                <div class="month-folder-count">2 photos</div>
+            </div>
+            <div class="month-folder" data-month="July">
+                <div class="folder-icon">📁</div>
+                <div class="month-folder-label">July 2025</div>
+                <div class="month-folder-count">2 photos</div>
+            </div>
+            <div class="month-folder" data-month="August">
+                <div class="folder-icon">📁</div>
+                <div class="month-folder-label">August 2025</div>
+                <div class="month-folder-count">2 photos</div>
+            </div>
+            <div class="month-folder" data-month="September">
+                <div class="folder-icon">📁</div>
+                <div class="month-folder-label">September 2025</div>
+                <div class="month-folder-count">2 photos</div>
+            </div>
+            <div class="month-folder" data-month="October">
+                <div class="folder-icon">📁</div>
+                <div class="month-folder-label">October 2025</div>
+                <div class="month-folder-count">2 photos</div>
+            </div>
+            <div class="month-folder" data-month="November">
+                <div class="folder-icon">📁</div>
+                <div class="month-folder-label">November 2025</div>
+                <div class="month-folder-count">2 photos</div>
+            </div>
+            <div class="month-folder" data-month="December">
+                <div class="folder-icon">📁</div>
+                <div class="month-folder-label">December 2025</div>
+                <div class="month-folder-count">2 photos</div>
+            </div>
+            <div class="month-folder" data-month="January">
+                <div class="folder-icon">📁</div>
+                <div class="month-folder-label">January 2026</div>
+                <div class="month-folder-count">2 photos</div>
+            </div>
+            <div class="month-folder" data-month="February">
+                <div class="folder-icon">📁</div>
+                <div class="month-folder-label">February 2026</div>
+                <div class="month-folder-count">2 photos</div>
+            </div>
+            <div class="month-folder" data-month="March">
+                <div class="folder-icon">📁</div>
+                <div class="month-folder-label">March 2026</div>
+                <div class="month-folder-count">2 photos</div>
+            </div>
+            <div class="month-folder" data-month="April">
+                <div class="folder-icon">📁</div>
+                <div class="month-folder-label">April 2026</div>
+                <div class="month-folder-count">2 photos</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FOR VIEWING MONTH PHOTOS -->
+    <div id="photoModal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <div class="modal-title" id="modalTitle">May 2025</div>
+            <div class="photo-gallery" id="photoGallery">
+                <!-- Photos will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== FLOATING HEARTS ANIMATION ==========
+        function createFloatingHeart() {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.textContent = "💕";
+            heart.style.left = Math.random() * 100 + "%";
+            heart.style.animationDuration = (3 + Math.random() * 2) + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(createFloatingHeart, 500);
+
+        // ========== COUNTDOWN TIMER ==========
+        const targetDate = new Date("May 10, 2026 00:00:00 UTC").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeRemaining = targetDate - now;
+
+            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            document.querySelector("#days .countdown-number").textContent = days;
+            document.querySelector("#hours .countdown-number").textContent = hours;
+            document.querySelector("#minutes .countdown-number").textContent = minutes;
+            document.querySelector("#seconds .countdown-number").textContent = seconds;
+
+            if (timeRemaining < 0) {
+                revealTimeline();
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // ========== PASSWORD UNLOCK ==========
+        const correctPassword = "duduisdudu";
+
+        document.getElementById("unlockButton").addEventListener("click", function() {
+            const enteredPassword = document.getElementById("passwordInput").value;
+
+            if (enteredPassword === correctPassword) {
+                alert("🎉 Unlocked! Welcome to our timeline!");
+                revealTimeline();
+            } else {
+                alert("❌ Wrong password! Try again.");
+            }
+        });
+
+        // ========== REVEAL TIMELINE ==========
+        function revealTimeline() {
+            document.getElementById("countdown-section").style.display = "none";
+            document.getElementById("timeline-section").style.display = "block";
+        }
+
+        // ========== MONTH FOLDER MODAL ==========
+
+        // Data structure for photos and messages by month
+        const monthsData = {
+            "May": {
+                label: "May 2025",
+                photos: [
+                    { src: "https://via.placeholder.com/400x300?text=May+Photo+1", message: "💕 Our first moment together..." },
+                    { src: "https://via.placeholder.com/400x300?text=May+Photo+2", message: "💕 The beginning of forever..." }
+                ]
+            },
+            "June": {
+                label: "June 2025",
+                photos: [
+                    { src: "https://via.placeholder.com/400x300?text=June+Photo+1", message: "💕 Amazing times in June..." },
+                    { src: "https://via.placeholder.com/400x300?text=June+Photo+2", message: "💕 Making beautiful memories..." }
+                ]
+            },
+            "July": {
+                label: "July 2025",
+                photos: [
+                    { src: "https://via.placeholder.com/400x300?text=July+Photo+1", message: "💕 Summer love..." },
+                    { src: "https://via.placeholder.com/400x300?text=July+Photo+2", message: "💕 Every moment with you is special..." }
+                ]
+            },
+            "August": {
+                label: "August 2025",
+                photos: [
+                    { src: "https://via.placeholder.com/400x300?text=August+Photo+1", message: "💕 August adventures..." },
+                    { src: "https://via.placeholder.com/400x300?text=August+Photo+2", message: "💕 You make my heart so happy..." }
+                ]
+            },
+            "September": {
+                label: "September 2025",
+                photos: [
+                    { src: "https://via.placeholder.com/400x300?text=September+Photo+1", message: "💕 September memories..." },
+                    { src: "https://via.placeholder.com/400x300?text=September+Photo+2", message: "💕 I love you more each day..." }
+                ]
+            },
+            "October": {
+                label: "October 2025",
+                photos: [
+                    { src: "https://via.placeholder.com/400x300?text=October+Photo+1", message: "💕 Autumn with you..." },
+                    { src: "https://via.placeholder.com/400x300?text=October+Photo+2", message: "💕 You're my favorite..." }
+                ]
+            },
+            "November": {
+                label: "November 2025",
+                photos: [
+                    { src: "https://via.placeholder.com/400x300?text=November+Photo+1", message: "💕 Grateful for you..." },
+                    { src: "https://via.placeholder.com/400x300?text=November+Photo+2", message: "💕 You complete me..." }
+                ]
+            },
+            "December": {
+                label: "December 2025",
+                photos: [
+                    { src: "https://via.placeholder.com/400x300?text=December+Photo+1", message: "💕 Holiday magic with you..." },
+                    { src: "https://via.placeholder.com/400x300?text=December+Photo+2", message: "💕 The best gift is you..." }
+                ]
+            },
+            "January": {
+                label: "January 2026",
+                photos: [
+                    { src: "https://via.placeholder.com/400x300?text=January+Photo+1", message: "💕 New year with you..." },
+                    { src: "https://via.placeholder.com/400x300?text=January+Photo+2", message: "💕 My forever starts with you..." }
+                ]
+            },
+            "February": {
+                label: "February 2026",
+                photos: [
+                    { src: "https://via.placeholder.com/400x300?text=February+Photo+1", message: "💕 Love month with my love..." },
+                    { src: "https://via.placeholder.com/400x300?text=February+Photo+2", message: "💕 You're my Valentine..." }
+                ]
+            },
+            "March": {
+                label: "March 2026",
+                photos: [
+                    { src: "https://via.placeholder.com/400x300?text=March+Photo+1", message: "💕 Spring love..." },
+                    { src: "https://via.placeholder.com/400x300?text=March+Photo+2", message: "💕 Fresh memories with you..." }
+                ]
+            },
+            "April": {
+                label: "April 2026",
+                photos: [
+                    { src: "https://via.placeholder.com/400x300?text=April+Photo+1", message: "💕 Almost one year anniversary..." },
+                    { src: "https://via.placeholder.com/400x300?text=April+Photo+2", message: "💕 Can't wait to celebrate with you..." }
+                ]
+            }
+        };
+
+        const modal = document.getElementById("photoModal");
+        const closeBtn = document.querySelector(".close-modal");
+        const monthFolders = document.querySelectorAll(".month-folder");
+
+        // Open modal when folder is clicked
+        monthFolders.forEach(folder => {
+            folder.addEventListener("click", function() {
+                const month = this.dataset.month;
+                const data = monthsData[month];
+
+                document.getElementById("modalTitle").textContent = data.label;
+
+                let photoHTML = "";
+                data.photos.forEach(photo => {
+                    photoHTML += `
+                        <div class="gallery-item">
+                            <img src="${photo.src}" alt="${data.label}">
+                            <p>${photo.message}</p>
+                        </div>
+                    `;
+                });
+
+                document.getElementById("photoGallery").innerHTML = photoHTML;
+                modal.classList.add("active");
+            });
+        });
+
+        // Close modal when X is clicked
+        closeBtn.addEventListener("click", function() {
+            modal.classList.remove("active");
+        });
+
+        // Close modal when clicking outside
+        modal.addEventListener("click", function(e) {
+            if (e.target === modal) {
+                modal.classList.remove("active");
+            }
+        });
+    </script>
+</body>
+</html>
