@@ -280,20 +280,25 @@
 
         setInterval(createFloatingHeart, 200);
 
-        // ========== DAILY PHOTOS & MESSAGES ==========
-        // FORMAT: { date: "YYYY-MM-DD", photo: "URL", message: "Your message" }
-        const dailyMessages = [
-            { date: "2025-05-10", photo: "https://via.placeholder.com/600x500?text=Day+1", message: "💕 Day 1: Our first moment together..." },
-            { date: "2025-05-11", photo: "https://via.placeholder.com/600x500?text=Day+2", message: "💕 Day 2: I fell in love with you..." },
-            { date: "2025-05-12", photo: "https://via.placeholder.com/600x500?text=Day+3", message: "💕 Day 3: Every moment with you..." },
-            { date: "2025-05-13", photo: "https://via.placeholder.com/600x500?text=Day+4", message: "💕 Day 4: You make me smile..." },
-            { date: "2025-05-14", photo: "https://via.placeholder.com/600x500?text=Day+5", message: "💕 Day 5: Forever with you..." },
-            { date: "2025-05-15", photo: "https://via.placeholder.com/600x500?text=Day+6", message: "💕 Day 6: I love you more..." },
-            { date: "2025-05-16", photo: "https://via.placeholder.com/600x500?text=Day+7", message: "💕 Day 7: One week of happiness..." },
-            // ADD MORE DAYS HERE - Copy the pattern above for each day
-            // Example for June:
-            // { date: "2025-06-10", photo: "https://your-photo-url", message: "💕 June 10: Message here..." },
-        ];
+      // ========== DAILY PHOTOS & MESSAGES FROM GOOGLE SHEET ==========
+let dailyMessages = [];
+
+const sheetUrl = "https://docs.google.com/spreadsheets/d/1XgslBCqSHRcINh2Z_JdrJx6VcvDSZFM717mRp28vw34/gviz/tq?tqx=out:json";
+
+fetch(sheetUrl)
+    .then(response => response.text())
+    .then(text => {
+        const json = JSON.parse(text.substring(47).slice(0, -2));
+        json.table.rows.forEach(row => {
+            if (row.c[0] && row.c[1] && row.c[2]) {
+                dailyMessages.push({
+                    date: row.c[0].v,
+                    photo: row.c[1].v,
+                    message: row.c[2].v
+                });
+            }
+        });
+    });
 
         function getTodayPhoto() {
             const today = new Date();
