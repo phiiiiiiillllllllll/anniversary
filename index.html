@@ -307,11 +307,12 @@ fetch(sheetUrl)
         }
     });
 
-        function getTodayPhoto() {
+       function getTodayPhoto() {
             const today = new Date();
+            today.setFullYear(today.getFullYear() - 1);  // Go back 1 year
             const dateString = today.getFullYear() + "-" +
-                              String(today.getMonth() + 1).padStart(2, '0') + "-" +
-                              String(today.getDate()).padStart(2, '0');
+                      String(today.getMonth() + 1).padStart(2, '0') + "-" +
+                      String(today.getDate()).padStart(2, '0');
 
             const todayData = dailyMessages.find(day => day.date === dateString);
 
@@ -367,10 +368,12 @@ fetch(sheetUrl)
 
         // ========== REVEAL MAIN SECTION ==========
         function revealMain() {
+            setTimeout(() => {
             getTodayPhoto();
             document.getElementById("countdown-section").style.display = "none";
             document.querySelector(".password-section").style.display = "none";
             document.getElementById("main-section").style.display = "block";
+             }, 500); // Wait 500ms for data to load
         }
     </script>
 </body>
