@@ -283,21 +283,28 @@
       // ========== DAILY PHOTOS & MESSAGES FROM GOOGLE SHEET ==========
 let dailyMessages = [];
 
-const sheetUrl = "https://docs.google.com/spreadsheets/d/1XgslBCqSHRcINh2Z_JdrJx6VcvDSZFM717mRp28vw34/edit?usp=sharing";
+const sheetUrl = "https://docs.google.com/spreadsheets/d/1XgslBCqSHRcINh2Z_JdrJx6VcvDSZFM717mRp28vw34/gviz/tq?tqx=out:json";
 
 fetch(sheetUrl)
     .then(response => response.text())
     .then(text => {
-        const json = JSON.parse(text.substring(47).slice(0, -2));
-        json.table.rows.forEach(row => {
-            if (row.c[0] && row.c[1] && row.c[2]) {
-                dailyMessages.push({
-                    date: row.c[0].v,
-                    photo: row.c[1].v,
-                    message: row.c[2].v
+        try {
+            const jsonStr = text.match(/\{.*\}/s)[0];
+            const json = JSON.parse(jsonStr);
+            if (json.table && json.table.rows) {
+                json.table.rows.forEach(row => {
+                    if (row.c[0] && row.c[1] && row.c[2]) {
+                        dailyMessages.push({
+                            date: row.c[0].v,
+                            photo: row.c[1].v,
+                            message: row.c[2].v
+                        });
+                    }
                 });
             }
-        });
+        } catch (e) {
+            console.log("Error parsing sheet:", e);
+        }
     });
 
         function getTodayPhoto() {
