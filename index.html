@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,61 +8,36 @@
     <style>
         /* ANIMATIONS */
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes bounce {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         @keyframes floatingHearts {
-            0% {
-                opacity: 1;
-                transform: translateY(100vh) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-100vh) scale(1);
-            }
+            0% { opacity: 1; transform: translateY(100vh) scale(1); }
+            100% { opacity: 0; transform: translateY(-100vh) scale(1); }
         }
 
-        /* STYLING FOR THE WHOLE PAGE */
         body {
             margin: 0;
             padding: 20px;
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #ffc0e0, #ffb3d9);
-            min-height: auto;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -70,15 +45,14 @@
             overflow-x: hidden;
         }
 
-        /* FLOATING HEARTS BACKGROUND */
         .heart {
             position: fixed;
             pointer-events: none;
             font-size: 24px;
             animation: floatingHearts 8s linear forwards;
+            z-index: 0;
         }
 
-        /* STYLING FOR THE COUNTDOWN SECTION */
         #countdown-section {
             background: white;
             border-radius: 20px;
@@ -86,13 +60,12 @@
             text-align: center;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             max-width: 900px;
-            max-height: 500px;
-            overflow-y: auto;
             display: flex;
             flex-direction: column;
             animation: fadeIn 1s ease-in, slideInUp 1s ease-out;
-            margin-bottom: 100px;
-            margin-top: 200px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
         }
 
         #countdown-section h1 {
@@ -104,16 +77,16 @@
         }
 
         .password-section {
-            margin-top: 1000px;
             padding: 20px;
             background: white;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             max-width: 400px;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
-        /* THE COUNTDOWN TIMER NUMBERS */
         #countdown-timer {
             font-size: 28px;
             color: #333;
@@ -151,7 +124,6 @@
             font-weight: bold;
         }
 
-        /* STYLING FOR THE MAIN SECTION (Single Photo + Text) */
         #main-section {
             background: white;
             border-radius: 20px;
@@ -160,6 +132,8 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             animation: fadeIn 0.8s ease-in;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         #main-section h1 {
@@ -172,6 +146,7 @@
         .photo-container {
             margin-bottom: 30px;
             animation: slideInUp 0.8s ease-out;
+            min-height: 200px;
         }
 
         .main-photo {
@@ -192,23 +167,19 @@
             font-style: italic;
         }
 
-        /* MOBILE FRIENDLY */
         @media (max-width: 600px) {
             #countdown-section, #main-section {
                 padding: 30px;
                 max-width: 100%;
             }
-
             #countdown-timer {
                 font-size: 20px;
                 gap: 15px;
             }
-
             #countdown-timer span {
                 min-width: 60px;
                 padding: 15px;
             }
-
             .main-photo {
                 max-width: 100%;
             }
@@ -217,9 +188,8 @@
 </head>
 <body>
 
-    <!-- COUNTDOWN SECTION -->
     <div id="countdown-section">
-        <h1>Countdown to Anniversary 💕</h1>
+        <h1>Countdown to Anniversary &#128150;</h1>
         <div id="countdown-timer">
             <span id="days">
                 <div class="countdown-label">Days</div>
@@ -240,9 +210,8 @@
         </div>
     </div>
 
-    <!-- PASSWORD BYPASS -->
     <div class="password-section">
-        <p style="color: #999; font-size: 12px;">🔐 Secret bypass (for testing)</p>
+        <p style="color: #999; font-size: 12px;">&#128272; Secret bypass (for testing)</p>
         <input type="password" id="passwordInput" placeholder="Enter password"
                style="padding: 10px; border: 2px solid #ffb3d9; border-radius: 5px; width: 150px;">
         <button id="unlockButton"
@@ -251,9 +220,8 @@
         </button>
     </div>
 
-    <!-- MAIN SECTION (Daily Photo + Text) -->
     <div id="main-section" style="display: none;">
-        <h1>Our Love Story 💕</h1>
+        <h1>Our Love Story &#128150;</h1>
         <div class="photo-container">
             <img id="daily-photo" src="" alt="Daily Photo" class="main-photo">
         </div>
@@ -262,118 +230,153 @@
     </div>
 
     <script>
-        // ========== FLOATING HEARTS ANIMATION ==========
+        // ========== FLOATING HEARTS ==========
         function createFloatingHeart() {
             const heart = document.createElement("div");
             heart.className = "heart";
-            const hearts = ["💕", "💖", "💗", "💝", "💓"];
+            const hearts = ["\u{1F495}", "\u{1F496}", "\u{1F497}", "\u{1F49D}", "\u{1F493}"];
             heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
             heart.style.left = Math.random() * 100 + "%";
             heart.style.top = Math.random() * 100 + "%";
             heart.style.animationDuration = (3 + Math.random() * 2) + "s";
             document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
+            setTimeout(() => heart.remove(), 5000);
         }
-
         setInterval(createFloatingHeart, 200);
 
-      // ========== DAILY PHOTOS & MESSAGES FROM GOOGLE SHEET ==========
-let dailyMessages = [];
+        // ========== HELPERS ==========
+        // Build a Google Drive URL that actually works inside an <img> tag.
+        // The old `uc?export=view&id=...` and `/preview` URLs no longer render
+        // in <img>; the thumbnail endpoint does.
+        function driveImageUrl(rawUrl) {
+            if (!rawUrl) return "";
+            // Match the file ID from any common Drive URL shape.
+            const idMatch = rawUrl.match(/[-\w]{25,}/);
+            if (!idMatch) return rawUrl; // not a Drive URL, leave alone
+            const id = idMatch[0];
+            return `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+        }
 
-const sheetUrl = "https://docs.google.com/spreadsheets/d/1XgslBCqSHRcINh2Z_JdrJx6VcvDSZFM717mRp28vw34/gviz/tq?tqx=out:json";
+        function getTodayDateString() {
+            const today = new Date();
+            today.setFullYear(today.getFullYear() - 1); // anniversary mode: 1 year back
+            return today.getFullYear() + "-" +
+                   String(today.getMonth() + 1).padStart(2, '0') + "-" +
+                   String(today.getDate()).padStart(2, '0');
+        }
 
-fetch(sheetUrl)
-    .then(response => response.text())
-    .then(text => {
-        try {
-            const jsonStr = text.match(/\{.*\}/s)[0];
-            const json = JSON.parse(jsonStr);
-            if (json.table && json.table.rows) {
+        // ========== DAILY PHOTOS FROM SHEET ==========
+        let dailyMessages = [];
+        let sheetReady = false;
+        let sheetPromise = null;
+
+        const sheetUrl = "https://docs.google.com/spreadsheets/d/1XgslBCqSHRcINh2Z_JdrJx6VcvDSZFM717mRp28vw34/gviz/tq?tqx=out:json";
+
+        sheetPromise = fetch(sheetUrl)
+            .then(r => r.text())
+            .then(text => {
+                const jsonStr = text.match(/\{.*\}/s)[0];
+                const json = JSON.parse(jsonStr);
+
                 json.table.rows.forEach(row => {
-                    if (row.c[0] && row.c[1] && row.c[2]) {
+                    if (row.c && row.c[0] && row.c[1] && row.c[2]) {
+                        let dateStr = row.c[0].v;
+                        const dateMatch = String(dateStr).match(/Date\((\d+),(\d+),(\d+)\)/);
+                        if (dateMatch) {
+                            const year = dateMatch[1];
+                            const month = String(parseInt(dateMatch[2]) + 1).padStart(2, '0');
+                            const day = String(dateMatch[3]).padStart(2, '0');
+                            dateStr = `${year}-${month}-${day}`;
+                        }
+
                         dailyMessages.push({
-                            date: row.c[0].v,
-                            photo: row.c[1].v,
+                            date: dateStr,
+                            photo: row.c[1].v,   // store raw URL; convert at render time
                             message: row.c[2].v
                         });
                     }
                 });
-            }
-        } catch (e) {
-            console.log("Error parsing sheet:", e);
-        }
-    });
+                sheetReady = true;
+                console.log("Loaded", dailyMessages.length, "entries from sheet");
+            })
+            .catch(err => {
+                console.error("Error loading sheet:", err);
+                sheetReady = true; // unblock revealMain even on failure
+            });
 
-       function getTodayPhoto() {
-            const today = new Date();
-            today.setFullYear(today.getFullYear() - 1);  // Go back 1 year
-            const dateString = today.getFullYear() + "-" +
-                      String(today.getMonth() + 1).padStart(2, '0') + "-" +
-                      String(today.getDate()).padStart(2, '0');
-
-            const todayData = dailyMessages.find(day => day.date === dateString);
+        function renderTodayPhoto() {
+            const dateString = getTodayDateString();
+            const todayData = dailyMessages.find(d => d.date === dateString);
+            const photoEl = document.getElementById("daily-photo");
+            const msgEl = document.getElementById("daily-message");
+            const dateEl = document.getElementById("daily-date");
 
             if (todayData) {
-                document.getElementById("daily-photo").src = todayData.photo;
-                document.getElementById("daily-message").textContent = todayData.message;
-                document.getElementById("daily-date").textContent = dateString;
+                const url = driveImageUrl(todayData.photo);
+                console.log("Today's photo URL:", url);
+                photoEl.onerror = () => {
+                    console.warn("Image failed to load:", url);
+                    photoEl.alt = "Photo couldn't load — check that the Drive file is shared as 'Anyone with the link'.";
+                };
+                photoEl.src = url;
+                msgEl.textContent = todayData.message;
+                dateEl.textContent = dateString;
             } else {
-                document.getElementById("daily-photo").src = "https://via.placeholder.com/600x500?text=No+Photo+Yet";
-                document.getElementById("daily-message").textContent = "💕 Coming soon...";
-                document.getElementById("daily-date").textContent = dateString;
+                photoEl.src = "";
+                photoEl.alt = "No photo yet for " + dateString;
+                msgEl.textContent = "\u{1F495} Coming soon...";
+                dateEl.textContent = dateString;
             }
         }
 
-        // ========== COUNTDOWN TIMER ==========
+        // ========== COUNTDOWN ==========
         const targetDate = new Date("May 10, 2026 11:00:00 UTC").getTime();
 
         function updateCountdown() {
-            const now = new Date().getTime();
+            const now = Date.now();
             const timeRemaining = targetDate - now;
 
-            const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+            const days = Math.max(0, Math.floor(timeRemaining / (1000 * 60 * 60 * 24)));
+            const hours = Math.max(0, Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+            const minutes = Math.max(0, Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60)));
+            const seconds = Math.max(0, Math.floor((timeRemaining % (1000 * 60)) / 1000));
 
             document.querySelector("#days .countdown-number").textContent = days;
             document.querySelector("#hours .countdown-number").textContent = hours;
             document.querySelector("#minutes .countdown-number").textContent = minutes;
             document.querySelector("#seconds .countdown-number").textContent = seconds;
 
-            if (timeRemaining < 0) {
+            if (timeRemaining <= 0) {
                 revealMain();
             }
         }
-
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // ========== PASSWORD UNLOCK ==========
+        // ========== PASSWORD ==========
         const correctPassword = "dudu";
-
-        document.getElementById("unlockButton").addEventListener("click", function() {
-            const enteredPassword = document.getElementById("passwordInput").value;
-
-            if (enteredPassword === correctPassword) {
-                alert("🎉 Unlocked! Welcome to our memory!");
+        document.getElementById("unlockButton").addEventListener("click", function () {
+            const entered = document.getElementById("passwordInput").value;
+            if (entered === correctPassword) {
                 revealMain();
             } else {
                 alert("❌ Wrong password! Try again.");
             }
         });
 
-        // ========== REVEAL MAIN SECTION ==========
+        // ========== REVEAL ==========
+        let revealed = false;
         function revealMain() {
-            setTimeout(() => {
-            getTodayPhoto();
-            document.getElementById("countdown-section").style.display = "none";
-            document.querySelector(".password-section").style.display = "none";
-            document.getElementById("main-section").style.display = "block";
-             }, 500); // Wait 500ms for data to load
+            if (revealed) return;
+            revealed = true;
+
+            // Wait for the sheet fetch before rendering, so dailyMessages is populated.
+            (sheetPromise || Promise.resolve()).finally(() => {
+                renderTodayPhoto();
+                document.getElementById("countdown-section").style.display = "none";
+                document.querySelector(".password-section").style.display = "none";
+                document.getElementById("main-section").style.display = "block";
+            });
         }
     </script>
 </body>
