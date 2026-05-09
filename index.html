@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -251,13 +251,14 @@
         </button>
     </div>
 
-    <!-- MAIN SECTION (Single Photo + Text) -->
+    <!-- MAIN SECTION (Daily Photo + Text) -->
     <div id="main-section" style="display: none;">
         <h1>Our Love Story 💕</h1>
         <div class="photo-container">
-            <img src="https://via.placeholder.com/600x500?text=Our+Anniversary+Photo" alt="Anniversary Photo" class="main-photo">
+            <img id="daily-photo" src="" alt="Daily Photo" class="main-photo">
         </div>
-        <p class="main-text">💕 The day our love story became even more beautiful. Thank you for being my person. I love you more each day. Happy Anniversary! 💕</p>
+        <p id="daily-message" class="main-text"></p>
+        <p style="color: #999; font-size: 12px; margin-top: 20px;" id="daily-date"></p>
     </div>
 
     <script>
@@ -278,6 +279,40 @@
         }
 
         setInterval(createFloatingHeart, 200);
+
+        // ========== DAILY PHOTOS & MESSAGES ==========
+        // FORMAT: { date: "YYYY-MM-DD", photo: "URL", message: "Your message" }
+        const dailyMessages = [
+            { date: "2025-05-10", photo: "https://via.placeholder.com/600x500?text=Day+1", message: "💕 Day 1: Our first moment together..." },
+            { date: "2025-05-11", photo: "https://via.placeholder.com/600x500?text=Day+2", message: "💕 Day 2: I fell in love with you..." },
+            { date: "2025-05-12", photo: "https://via.placeholder.com/600x500?text=Day+3", message: "💕 Day 3: Every moment with you..." },
+            { date: "2025-05-13", photo: "https://via.placeholder.com/600x500?text=Day+4", message: "💕 Day 4: You make me smile..." },
+            { date: "2025-05-14", photo: "https://via.placeholder.com/600x500?text=Day+5", message: "💕 Day 5: Forever with you..." },
+            { date: "2025-05-15", photo: "https://via.placeholder.com/600x500?text=Day+6", message: "💕 Day 6: I love you more..." },
+            { date: "2025-05-16", photo: "https://via.placeholder.com/600x500?text=Day+7", message: "💕 Day 7: One week of happiness..." },
+            // ADD MORE DAYS HERE - Copy the pattern above for each day
+            // Example for June:
+            // { date: "2025-06-10", photo: "https://your-photo-url", message: "💕 June 10: Message here..." },
+        ];
+
+        function getTodayPhoto() {
+            const today = new Date();
+            const dateString = today.getFullYear() + "-" +
+                              String(today.getMonth() + 1).padStart(2, '0') + "-" +
+                              String(today.getDate()).padStart(2, '0');
+
+            const todayData = dailyMessages.find(day => day.date === dateString);
+
+            if (todayData) {
+                document.getElementById("daily-photo").src = todayData.photo;
+                document.getElementById("daily-message").textContent = todayData.message;
+                document.getElementById("daily-date").textContent = dateString;
+            } else {
+                document.getElementById("daily-photo").src = "https://via.placeholder.com/600x500?text=No+Photo+Yet";
+                document.getElementById("daily-message").textContent = "💕 Coming soon...";
+                document.getElementById("daily-date").textContent = dateString;
+            }
+        }
 
         // ========== COUNTDOWN TIMER ==========
         const targetDate = new Date("May 10, 2026 11:00:00 UTC").getTime();
@@ -320,7 +355,9 @@
 
         // ========== REVEAL MAIN SECTION ==========
         function revealMain() {
+            getTodayPhoto();
             document.getElementById("countdown-section").style.display = "none";
+            document.querySelector(".password-section").style.display = "none";
             document.getElementById("main-section").style.display = "block";
         }
     </script>
